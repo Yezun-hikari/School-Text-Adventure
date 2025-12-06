@@ -1,8 +1,10 @@
+# Importiert die notwendigen Module für das Spiel.
 import functions
 import effects
 import time
 import sys
 
+# Inventare der verschiedenen Räume und des Spielers.
 server_room_inv = ["Netzwerkkabel", "Hammer"]
 teacher_inv = ["Gas", "Regal", "Schreibtisch"]
 main_hall_inv = ["Rattenspray", "Dietriche", "Verschimmelter Käse"]
@@ -11,6 +13,9 @@ player_inv = []
 
 
 def room_intro(room_id):
+    """
+    Zeigt eine Einführung für den Raum an, abhängig von der Raum-ID und dem Zustand des Raumes.
+    """
     if room_id == 1:
         if "Gas" in teacher_inv:
             effects.write("Sobald du das Lehrerzimmer betrittst sticht dir ein intensiver Kaffegeruch in die Nase.")
@@ -36,6 +41,9 @@ def room_intro(room_id):
 
 
 def teacher():
+    """
+    Logik für das Lehrerzimmer.
+    """
     room_intro(1)
 
     while True:
@@ -201,6 +209,9 @@ def teacher():
 
 
 def server_room():
+    """
+    Logik für den Serverraum.
+    """
     effects.write("Was möchtest du tun?")
 
     while True:
@@ -325,6 +336,9 @@ def server_room():
 
 
 def basement():
+    """
+    Logik für den Keller.
+    """
     room_intro(2)
 
     while True:
@@ -457,6 +471,9 @@ def basement():
 
 
 def main_hall():
+    """
+    Logik für die Haupthalle.
+    """
     effects.write("Was möchtest du tun?")
 
     while True:
@@ -542,6 +559,9 @@ def main_hall():
 
 
 def outside():
+    """
+    Logik für den Außenbereich (Start des Spiels).
+    """
     effects.write("Du startest vor dem Schulgebäude...")
     effects.write("Du stehst vor der Tür des Haupteingangs.")
     effects.write("Zum Glück hast du dies bedacht und 5 Ditriche Mitgenommen.")
