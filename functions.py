@@ -1,3 +1,4 @@
+# Importiert die notwendigen Module für die Spielfunktionen.
 from random import *
 from effects import *
 import rooms
@@ -5,6 +6,11 @@ from sys import *
 
 
 def door_lock(lockpicks):
+    """
+    Simuliert das Knacken eines Schlosses.
+    Der Spieler muss eine zufällige Zahl erraten.
+    Gibt 777 bei Erfolg und 6 bei Misserfolg zurück.
+    """
     write("Du hast noch " + str(lockpicks) + " Ditriche übrig.")
     count = 2
     random = randint(1,5)
@@ -17,10 +23,10 @@ def door_lock(lockpicks):
         elif int(guess) == random:
             write("Hurra!")
             write("Du hast das Schloss erfolgreich geknackt.")
-            return 777  #Return 777 if succes
+            return 777  # Gibt 777 zurück, wenn das Schloss geknackt wurde.
     
         else:
-            if int(guess) > 0:  #Check if input is a positive number
+            if int(guess) > 0:  # Überprüft, ob die Eingabe eine positive Zahl ist.
                 if count == 1:
                     write("Leider Falsch, der Dietrich ist gebrochen...")
                     count = count - 1
@@ -32,13 +38,17 @@ def door_lock(lockpicks):
             else:
                 print("Die Eingabe war ungültig, schreibe eine positive Zahl von 1 bis 5")
     
-    return 6  #Return 6 if lockpick breaks
+    return 6  # Gibt 6 zurück, wenn der Dietrich bricht.
 
 
 def percent(percentage):
+    """
+    Eine Funktion, die eine prozentuale Erfolgschance simuliert.
+    Gibt 1 bei Erfolg und 0 bei Misserfolg zurück.
+    """
     random = randint(1, 100)
 
-    if random < percentage:  #Check if random generated number is in the range between 1 and percentage
+    if random < percentage:  # Überprüft, ob die zufällig generierte Zahl im Bereich von 1 bis zum Prozentsatz liegt.
         return 1
     
     else:
@@ -46,6 +56,9 @@ def percent(percentage):
     
 
 def main_door():
+    """
+    Logik für die Haupttür, nachdem das Schloss geknackt wurde.
+    """
     while True:
         write("Möchtest du die Eingangshalle betreten?")
         yn = input("Y/n: ")

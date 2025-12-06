@@ -1,9 +1,13 @@
+# Importiert die notwendigen Module für visuelle Effekte.
 import sys
 import time
 import pyfiglet
 
 
 def write(text):
+    """
+    Simuliert einen Schreibmaschineneffekt für den angegebenen Text.
+    """
     for character in text:
         sys.stdout.write(character)
         sys.stdout.flush()
@@ -12,6 +16,9 @@ def write(text):
 
 
 def header(text, size):
+    """
+    Zeigt einen ASCII-Art-Header mit dem angegebenen Text und der angegebenen Größe an.
+    """
     if size == '0':
         sys.stdout.write(pyfiglet.Figlet(font='mini').renderText(text))
 
@@ -23,6 +30,9 @@ def header(text, size):
 
 
 def clear_screen():
+    """
+    Leert den Bildschirm, indem 50 leere Zeilen gedruckt werden.
+    """
     count = 50
     while count > 0:
         print()
@@ -30,6 +40,9 @@ def clear_screen():
 
 
 def game_over(ending):
+    """
+    Zeigt den "Game Over"-Bildschirm mit dem angegebenen Ende und den Credits an.
+    """
     clear_screen()
     header(ending, '1')
     time.sleep(1)
