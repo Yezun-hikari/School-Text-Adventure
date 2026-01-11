@@ -92,6 +92,8 @@ def teacher():
                                     item_taken = "Klassenarbeiten"
                                     effects.write("Du hast die Klassenarbeiten im Regal gefunden!")
                                     effects.write("Du erzählst allen von deinem Erfolg und wirst als Held gefeiert!")
+                                    effects.game_over('Ende 7')
+                                    sys.exit()
                                 else:
                                     effects.write("Das Regal ist leer...")
                                     time.sleep(2)
@@ -111,6 +113,8 @@ def teacher():
                                     item_taken = "Klassenarbeiten"
                                     effects.write("Du hast die Klassenarbeiten im Schreibtisch gefunden!")
                                     effects.write("Du erzählst allen von deinem Erfolg und wirst als Held gefeiert!")
+                                    effects.game_over('Ende 7')
+                                    sys.exit()
                                 else:
                                     effects.write("Der Schreibtisch ist leer...")
                                     time.sleep(2)
