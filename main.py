@@ -2,6 +2,7 @@
 import effects  # Modul für visuelle Effekte wie Text-Header und Schreibanimation.
 import rooms  # Modul, das die verschiedenen Räume und die Spiellogik enthält.
 import sys  # Modul für den Zugriff auf system-spezifische Parameter und Funktionen.
+from functions import get_yes_no_input
 
 
 def main():
@@ -17,7 +18,7 @@ def main():
     # Hauptschleife, die den Spieler fragt, ob er das Spiel starten möchte.
     while True:
         effects.write("Möchtest du das Spiel starten?")
-        yn = input("Y/n: ")  # Wartet auf die Eingabe des Spielers.
+        yn = get_yes_no_input("Y/n: ")  # Wartet auf die Eingabe des Spielers.
         effects.clear_screen()  # Leert den Bildschirm nach der Eingabe.
         
         # Überprüft die Eingabe des Spielers.
@@ -30,9 +31,6 @@ def main():
             effects.write("Vielleicht ja ein andermal :)")
             effects.game_over('School Adventure')  # Zeigt den "Game Over"-Bildschirm an.
             sys.exit()  # Beendet das Programm.
-
-        else:
-            print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
 
 # Startet die Hauptfunktion, wenn das Skript ausgeführt wird.
 main()

@@ -5,6 +5,33 @@ import rooms
 from sys import *
 
 
+def get_integer_input(prompt, min_val=None, max_val=None, range_error_message="Ungültige Eingabe."):
+    """
+    Nimmt eine Eingabe vom Benutzer entgegen und stellt sicher, dass es sich um eine gültige Ganzzahl in einem bestimmten Bereich handelt.
+    """
+    while True:
+        try:
+            value = int(input(prompt))
+            if (min_val is not None and value < min_val) or \
+               (max_val is not None and value > max_val):
+                print(range_error_message)
+            else:
+                return value
+        except ValueError:
+            print("Ungültige Eingabe. Bitte geben Sie eine ganze Zahl ein.")
+
+def get_yes_no_input(prompt):
+    """
+    Nimmt eine 'Y/n'-Eingabe vom Benutzer entgegen und stellt sicher, dass sie gültig ist.
+    """
+    while True:
+        choice = input(prompt)
+        if choice in ["Y", "n"]:
+            return choice
+        else:
+            print("Ungültige Eingabe. Bitte geben Sie 'Y' oder 'n' ein.")
+
+
 def door_lock(lockpicks):
     """
     Simuliert das Knacken eines Schlosses.
@@ -16,27 +43,18 @@ def door_lock(lockpicks):
     random = randint(1,5)
     
     while count > 0:
-        guess = input("Rate: ")
-        if guess == "":
-            print("Die Eingabe war ungültig, schreibe eine positive Zahl von 1 bis 5")
-
-        elif int(guess) == random:
+        guess = get_integer_input("Rate: ", min_val=1, max_val=5, range_error_message="Die Eingabe war ungültig, schreibe eine positive Zahl von 1 bis 5")
+        if guess == random:
             write("Hurra!")
             write("Du hast das Schloss erfolgreich geknackt.")
             return 777  # Gibt 777 zurück, wenn das Schloss geknackt wurde.
     
         else:
-            if int(guess) > 0:  # Überprüft, ob die Eingabe eine positive Zahl ist.
-                if count == 1:
-                    write("Leider Falsch, der Dietrich ist gebrochen...")
-                    count = count - 1
-
-                else:
-                    write("Das war leider Falsch. Versuche es erneut!")
-                    count = count - 1
-
+            count -= 1
+            if count > 0:
+                write("Das war leider Falsch. Versuche es erneut!")
             else:
-                print("Die Eingabe war ungültig, schreibe eine positive Zahl von 1 bis 5")
+                write("Leider Falsch, der Dietrich ist gebrochen...")
     
     return 6  # Gibt 6 zurück, wenn der Dietrich bricht.
 
@@ -61,7 +79,7 @@ def main_door():
     """
     while True:
         write("Möchtest du die Eingangshalle betreten?")
-        yn = input("Y/n: ")
+        yn = get_yes_no_input("Y/n: ")
         clear_screen()
 
         if yn == "Y":
@@ -75,7 +93,3 @@ def main_door():
             write("Du hast ein unwohles gefühl und kehrst zurrück...")
             game_over('Ende 2')
             sys.exit()
-        else:
-            print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
-
