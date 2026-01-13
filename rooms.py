@@ -3,6 +3,7 @@ import functions
 import effects
 import time
 import sys
+from functions import get_integer_input, get_yes_no_input
 
 # Inventare der verschiedenen Räume und des Spielers.
 server_room_inv = ["Netzwerkkabel", "Hammer"]
@@ -48,10 +49,10 @@ def teacher():
 
     while True:
         effects.write("1. Nach Items im aktuellen Raum schauen, 2. Item verwenden, 3. Zurück in die Haupthalle")
-        yn = input("1/2/3: ")
+        yn = get_integer_input("1/2/3: ", min_val=1, max_val=3, range_error_message="Die Eingabe war ungültig, schreibe 1, 2 oder 3.")
         effects.clear_screen()
 
-        if yn == "1":
+        if yn == 1:
             if "Gas" in teacher_inv:
                 effects.write("Du athmest zu viel vom Kaffegeruch ein und fällst zu Boden!")
                 time.sleep(2)
@@ -68,23 +69,19 @@ def teacher():
                     print()
                     effects.write(str(pos) + ". Zurrück")
                     effects.write("Möchtest du an einem dieser Orte nachschauen?")
-                    yn = input("Y/n: ")
+                    yn = get_yes_no_input("Y/n: ")
 
                     if yn == "Y":
                         effects.write("An welchem Ort willst du suchen?")
-                        item_choice = input("Nummer des Ortes: ")
+                        item_choice = get_integer_input("Nummer des Ortes: ", min_val=1, max_val=len(teacher_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Orte.")
                         effects.clear_screen()
 
-                        if item_choice == "":
-                            effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Orte.")
-
-                        elif int(item_choice) == len(teacher_inv) + 1:
+                        if item_choice == len(teacher_inv) + 1:
                             effects.write("Kein Ort wird durchsucht.")
                             effects.clear_screen()
                             server_room()
 
-                        elif 0 < int(item_choice) < len(teacher_inv) + 1:
-                            item_choice = int(item_choice)
+                        else:
                             item_taken = teacher_inv[item_choice - 1]
                             class_test = functions.percent(50)
                             if item_taken == "Regal":
@@ -129,19 +126,12 @@ def teacher():
                                         effects.game_over('Ende 6')
                                         sys.exit()
 
-
-                        else:
-                            effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Orte.")
-
                     elif yn == "n":
                         effects.clear_screen()
                         effects.write("Es wird an keinem Ort gesucht.")
                         teacher()
 
-                    else:
-                        print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
-        elif yn == "2":
+        elif yn == 2:
             effects.write("Welches Item soll verwendet werden?")
             effects.write("Du wühlst in deiner Tasche rum und findest folgende Items:")
             pos = 1
@@ -156,25 +146,21 @@ def teacher():
             effects.write(str(pos) + ". Zurrück")
 
             while True:
-                item_use = input("Nummer des Items: ")
+                item_use = get_integer_input("Nummer des Items: ", min_val=1, max_val=len(player_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Items.")
                 effects.clear_screen()
 
-                if item_use == "":
-                    effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-                elif int(item_use) == len(player_inv) + 1:
+                if item_use == len(player_inv) + 1:
                     effects.write("Kein Item wird verwendet.")
                     effects.clear_screen()
                     teacher()
 
-                elif 0 < int(item_use) < len(player_inv) + 1:
-                    item_use = int(item_use)
+                else:
                     item_used = player_inv[item_use - 1]
 
                     if item_used == "Gasmaske":
                         while True:
                             effects.write("Gasmaske anziehen, um dem Kaffegeruch entgegen zu stehen?")
-                            yn = input("Y/n: ")
+                            yn = get_yes_no_input("Y/n: ")
                             
                             if yn == "Y":
                                 effects.write("Du ziehst dir so schnell wie möglich die Gasmaske an...")
@@ -191,25 +177,16 @@ def teacher():
                                 effects.clear_screen()
                                 teacher()
 
-                            else:
-                                print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
                     else:
                         effects.write("Das Item " + item_used + " kann hier nicht verwendet werden.")
                         time.sleep(1)
                         effects.clear_screen()
                         teacher()
 
-                else:
-                    effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-        elif yn == "3":
+        elif yn == 3:
             effects.write("Du kehrst in die Eingangshalle zurrück...")
             effects.clear_screen()
             main_hall()
-
-        else:
-            print("Die Eingabe war ungültig, schreibe 1, 2 oder 3.")
 
 
 def server_room():
@@ -220,10 +197,10 @@ def server_room():
 
     while True:
         effects.write("1. Items im aktuellen Raum anschauen, 2. Item verwenden, 3. Zurück in die Haupthalle")
-        yn = input("1/2/3: ")
+        yn = get_integer_input("1/2/3: ", min_val=1, max_val=3, range_error_message="Die Eingabe war ungültig, schreibe 1, 2 oder 3.")
         effects.clear_screen()
 
-        if yn == "1":
+        if yn == 1:
             while True:
                 effects.write("Du schaust dich im Raum um und findest folgende Items:")
                 pos = 1
@@ -233,23 +210,19 @@ def server_room():
                 print()
                 effects.write(str(pos) + ". Zurrück")
                 effects.write("Möchtest du eines der Items aufnehmen?")
-                yn = input("Y/n: ")
+                yn = get_yes_no_input("Y/n: ")
 
                 if yn == "Y":
                     effects.write("Welches Item möchtest du aufnehmen?")
-                    item_choice = input("Nummer des Items: ")
+                    item_choice = get_integer_input("Nummer des Items: ", min_val=1, max_val=len(server_room_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Items.")
                     effects.clear_screen()
 
-                    if item_choice == "":
-                        effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-                    elif int(item_choice) == len(server_room_inv) + 1:
+                    if item_choice == len(server_room_inv) + 1:
                         effects.write("Kein Item wird aufgenommen.")
                         effects.clear_screen()
                         server_room()
 
-                    elif 0 < int(item_choice) < len(server_room_inv) + 1:
-                        item_choice = int(item_choice)
+                    else:
                         item_taken = server_room_inv[item_choice - 1]
                         effects.write("Du nimmst das Item: " + item_taken)
                         global player_inv
@@ -259,18 +232,12 @@ def server_room():
                         effects.clear_screen()
                         server_room()
 
-                    else:
-                        effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
                 elif yn == "n":
                     effects.clear_screen()
                     effects.write("Kein Item wird aufgenommen.")
                     server_room()
 
-                else:
-                    print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
-        elif yn == "2":
+        elif yn == 2:
             effects.write("Welches Item soll verwendet werden?")
             effects.write("Du wühlst in deiner Tasche rum und findest folgende Items:")
             pos = 1
@@ -285,25 +252,21 @@ def server_room():
             effects.write(str(pos) + ". Zurrück")
 
             while True:
-                item_use = input("Nummer des Items: ")
+                item_use = get_integer_input("Nummer des Items: ", min_val=1, max_val=len(player_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Items.")
                 effects.clear_screen()
 
-                if item_use == "":
-                    effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-                elif int(item_use) == len(player_inv) + 1:
+                if item_use == len(player_inv) + 1:
                     effects.write("Kein Item wird verwendet.")
                     effects.clear_screen()
                     server_room()
 
-                elif 0 < int(item_use) < len(player_inv) + 1:
-                    item_use = int(item_use)
+                else:
                     item_used = player_inv[item_use - 1]
 
                     if item_used == "Hammer":
                         while True:
                             effects.write("Hammer verwenden um den Server zu zerstören?")
-                            yn = input("Y/n: ")
+                            yn = get_yes_no_input("Y/n: ")
                             
                             if yn == "Y":
                                 effects.write("Du Zerstörst den Schulserver mit einem Hammer...")
@@ -318,25 +281,16 @@ def server_room():
                                 effects.clear_screen()
                                 server_room()
 
-                            else:
-                                print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
                     else:
                         effects.write("Das Item " + item_used + " kann hier nicht verwendet werden.")
                         time.sleep(1)
                         effects.clear_screen()
                         server_room()
 
-                else:
-                    effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-        elif yn == "3":
+        elif yn == 3:
             effects.write("Du kehrst in die Eingangshalle zurrück...")
             effects.clear_screen()
             main_hall()
-
-        else:
-            print("Die Eingabe war ungültig, schreibe 1, 2 oder 3.")
 
 
 def basement():
@@ -347,10 +301,10 @@ def basement():
 
     while True:
         effects.write("1. Items im aktuellen Raum anschauen, 2. Item verwenden, 3. Zurück in die Haupthalle")
-        yn = input("1/2/3: ")
+        yn = get_integer_input("1/2/3: ", min_val=1, max_val=3, range_error_message="Die Eingabe war ungültig, schreibe 1, 2 oder 3.")
         effects.clear_screen()
 
-        if yn == "1":
+        if yn == 1:
             if "Ratten" in basement_inv:
                 effects.write("Du stolperst über einige Ratten und wirst gebissen!")
                 time.sleep(2)
@@ -367,23 +321,19 @@ def basement():
                     print()
                     effects.write(str(pos) + ". Zurrück")
                     effects.write("Möchtest du eines der Items aufnehmen?")
-                    yn = input("Y/n: ")
+                    yn = get_yes_no_input("Y/n: ")
 
                     if yn == "Y":
                         effects.write("Welches Item möchtest du aufnehmen?")
-                        item_choice = input("Nummer des Items: ")
+                        item_choice = get_integer_input("Nummer des Items: ", min_val=1, max_val=len(basement_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Items.")
                         effects.clear_screen()
 
-                        if item_choice == "":
-                            effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-                        elif int(item_choice) == len(basement_inv) + 1:
+                        if item_choice == len(basement_inv) + 1:
                             effects.write("Kein Item wird aufgenommen.")
                             effects.clear_screen()
                             server_room()
 
-                        elif 0 < int(item_choice) < len(basement_inv) + 1:
-                            item_choice = int(item_choice)
+                        else:
                             item_taken = basement_inv[item_choice - 1]
                             effects.write("Du nimmst das Item: " + item_taken)
                             global player_inv
@@ -393,18 +343,12 @@ def basement():
                             effects.clear_screen()
                             server_room()
 
-                        else:
-                            effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
                     elif yn == "n":
                         effects.clear_screen()
                         effects.write("Kein Item wird aufgenommen.")
                         server_room()
 
-                    else:
-                        print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
-        elif yn == "2":
+        elif yn == 2:
             effects.write("Welches Item soll verwendet werden?")
             effects.write("Du wühlst in deiner Tasche rum und findest folgende Items:")
             pos = 1
@@ -419,25 +363,21 @@ def basement():
             effects.write(str(pos) + ". Zurrück")
 
             while True:
-                item_use = input("Nummer des Items: ")
+                item_use = get_integer_input("Nummer des Items: ", min_val=1, max_val=len(player_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Items.")
                 effects.clear_screen()
 
-                if item_use == "":
-                    effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-                elif int(item_use) == len(player_inv) + 1:
+                if item_use == len(player_inv) + 1:
                     effects.write("Kein Item wird verwendet.")
                     effects.clear_screen()
                     server_room()
 
-                elif 0 < int(item_use) < len(player_inv) + 1:
-                    item_use = int(item_use)
+                else:
                     item_used = player_inv[item_use - 1]
 
                     if item_used == "Rattenspray":
                         while True:
                             effects.write("Rattenspray verwenden, um die Ratten zu verscheuchen?")
-                            yn = input("Y/n: ")
+                            yn = get_yes_no_input("Y/n: ")
                             
                             if yn == "Y":
                                 effects.write("Du sprühst wie ein irrer mit deinem Rattenspray rum...")
@@ -453,25 +393,16 @@ def basement():
                                 effects.clear_screen()
                                 basement()
 
-                            else:
-                                print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
                     else:
                         effects.write("Das Item " + item_used + " kann hier nicht verwendet werden.")
                         time.sleep(1)
                         effects.clear_screen()
                         basement()
 
-                else:
-                    effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-        elif yn == "3":
+        elif yn == 3:
             effects.write("Du kehrst in die Eingangshalle zurrück...")
             effects.clear_screen()
             main_hall()
-
-        else:
-            print("Die Eingabe war ungültig, schreibe 1 oder 2.")
 
 
 def main_hall():
@@ -482,10 +413,10 @@ def main_hall():
 
     while True:
         effects.write("1. Items im aktuellen Raum anschauen, 2. Andere Räume betreten")
-        yn = input("1/2: ")
+        yn = get_integer_input("1/2: ", min_val=1, max_val=2, range_error_message="Die Eingabe war ungültig, schreibe 1 oder 2.")
         effects.clear_screen()
 
-        if yn == "1":
+        if yn == 1:
             while True:
                 effects.write("Du schaust dich im Raum um und findest folgende Items:")
                 pos = 1
@@ -495,24 +426,19 @@ def main_hall():
                 print()
                 effects.write(str(pos) + ". Zurrück")
                 effects.write("Möchtest du eines der Items aufnehmen?")
-                yn = input("Y/n: ")
+                yn = get_yes_no_input("Y/n: ")
 
                 if yn == "Y":
                     effects.write("Welches Item möchtest du aufnehmen?")
-                    item_choice = input("Nummer des Items: ")
+                    item_choice = get_integer_input("Nummer des Items: ", min_val=1, max_val=len(main_hall_inv) + 1, range_error_message="Die Eingabe war ungültig, wähle die Nummer eines der Items.")
                     effects.clear_screen()
 
-                    if item_choice == "":
-                        effects.clear_screen()
-                        effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
-                    elif int(item_choice) == len(main_hall_inv) + 1:
+                    if item_choice == len(main_hall_inv) + 1:
                         effects.write("Kein Item wird aufgenommen.")
                         effects.clear_screen()
                         main_hall()
 
-                    elif 0 < int(item_choice) < len(main_hall_inv) + 1:
-                        item_choice = int(item_choice)
+                    else:
                         item_taken = main_hall_inv[item_choice - 1]
                         effects.write("Du nimmst das Item: " + item_taken)
                         global player_inv
@@ -521,45 +447,32 @@ def main_hall():
                         effects.clear_screen()
                         main_hall()
 
-                    else:
-                        effects.write("Die Eingabe war ungültig, wähle die Nummer eines der Items.")
-
                 elif yn == "n":
                     effects.clear_screen()
                     effects.write("Kein Item wird aufgenommen.")
                     main_hall()
 
-                else:
-                    print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
-
-        elif yn == "2":
+        elif yn == 2:
             while True:
                 effects.write("Welchen Raum möchtest du betreten?")
                 effects.write("1. Lehrerzimmer, 2. Requisiten Keller, 3. Serverraum")
-                yn = input("1/2/3: ")
+                yn = get_integer_input("1/2/3: ", min_val=1, max_val=3, range_error_message="Die Eingabe war ungültig, schreibe die Zahl des Raumes.")
                 effects.clear_screen()
 
-                if yn == "1":
+                if yn == 1:
                     effects.write("Du gehst in  das Lehrerzimmer...")
                     effects.clear_screen()
                     teacher()
 
-                elif yn == "2":
+                elif yn == 2:
                     effects.write("Du gehst in den Requisiten Keller...")
                     effects.clear_screen()
                     basement()
 
-                elif yn == "3":
+                elif yn == 3:
                     effects.write("Du gehst in den Serverraum...")
                     effects.clear_screen()
                     server_room()
-
-                else:
-                    print("Die Eingabe war ungültig, schreibe die Zahl des Raumes.")
-
-        else:
-            print("Die Eingabe war ungültig, schreibe 1 oder 2.")
 
 
 def outside():
@@ -571,7 +484,7 @@ def outside():
     effects.write("Zum Glück hast du dies bedacht und 5 Ditriche Mitgenommen.")
     while True:
         effects.write("Versuchen das Schloss zu knacken?")
-        yn = input("Y/n: ")
+        yn = get_yes_no_input("Y/n: ")
         effects.clear_screen()
 
         if yn == "Y":
@@ -582,7 +495,7 @@ def outside():
                 if lockpicks == 1:
                     effects.write("Dir sind die Ditriche ausgegangen Q_Q.")
                     effects.write("Möchtest du stattdessen die Tür aufbrechen?")
-                    yn = input("Y/n: ")
+                    yn = get_yes_no_input("Y/n: ")
                     effects.clear_screen()
                     if yn == "Y":
                         effects.write("Du nimmst Anlauf und stößt mit voller kraft gegen die Tür...")
@@ -603,9 +516,6 @@ def outside():
                         effects.game_over('Ende 1')
                         sys.exit()
 
-                    else:
-                        print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
-
                 if is_succes == 777:
                     functions.main_door()
 
@@ -619,6 +529,3 @@ def outside():
             time.sleep(1)
             effects.game_over('Ende 0')
             return
-
-        else:
-            print("Die Eingabe war ungültig, schreibe Y oder n und achte auf die groß/kleinschreibung.")
