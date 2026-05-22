@@ -12,7 +12,7 @@ def main():
     """
     effects.clear_screen()  # Leert den Bildschirm, um eine saubere Anzeige zu gewährleisten.
     effects.header('School Adventure', '1')  # Zeigt den Haupttitel des Spiels an.
-    effects.header('by Alf, Luisa, Lotte, Mia and Tim', '0')  # Zeigt die Autoren des Spiels an.
+    effects.header('by Alf, Louisa, Lotte, Mia and Tim', '0')  # Zeigt die Autoren des Spiels an.
     print("")
 
     # Hauptschleife, die den Spieler fragt, ob er das Spiel starten möchte.
