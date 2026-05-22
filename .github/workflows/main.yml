@@ -1,0 +1,31 @@
+name: Build EXE and attach to Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build-windows-exe:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Abhängigkeiten installieren
+        run: |
+          pip install pyfiglet pyinstaller
+
+      - name: EXE bauen
+        run: |
+          pyinstaller --onefile --console --name "SchoolTextAdventure" main.py
+
+      - name: EXE an Release anhängen
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/SchoolTextAdventure.exe
